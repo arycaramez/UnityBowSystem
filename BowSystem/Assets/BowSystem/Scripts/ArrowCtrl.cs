@@ -6,29 +6,11 @@ using BowSystemLib.Bow;
 
 namespace BowSystemLib
 {
-    [RequireComponent(typeof(BowCtrl))]
-    public class ArrowCtrl : MonoBehaviour
+    public class ArrowCtrl : ArrowCtrlBase
     {
-        private BowCtrl bowSystemCtrl { get { return GetComponent<BowCtrl>(); } }
-
-        [SerializeField] private Transform handArrowAnchor;
-        [Space(5)]
-        [SerializeField] private GameObject currentArrow;
-        [SerializeField] private GameObject sceneArrow;
-
-        [Header("Settings:")]
-        [SerializeField] private bool inHand;
-        [SerializeField] private bool hide;
-        
         private bool lastInHand;
 
-        private void OnDisable()
-        {
-            DestroyImmediate(sceneArrow);
-        }
-
-        private void FixedUpdate()
-        {
+        override public void SceneArrowManager() {
             if (bowSystemCtrl.sceneBow)
             {
                 SceneInstanceCtrl();
@@ -43,14 +25,16 @@ namespace BowSystemLib
                 ArrowInfo _sceneArrowInfo = sceneArrow.GetComponent<ArrowInfo>();
 
                 Transform _anchor = GetAnchor();
-                if (lastInHand != inHand) {
+                if (lastInHand != inHand)
+                {
                     lastInHand = _anchor;
                     sceneArrow.transform.position = _anchor.position;
                     sceneArrow.transform.rotation = _anchor.rotation;
-                    if(!inHand) sceneArrow.transform.SetParent(_anchor);
+                    if (!inHand) sceneArrow.transform.SetParent(_anchor);
                 }
 
-                if (inHand) {
+                if (inHand)
+                {
                     sceneArrow.transform.SetParent(bowSystemCtrl.rootPlayerObj);
                     sceneArrow.transform.position = _anchor.position;
                     sceneArrow.transform.rotation = _anchor.rotation;
@@ -60,11 +44,7 @@ namespace BowSystemLib
             }
         }
 
-        private bool ArrowIsHide() {
-            return (bowSystemCtrl.GetBowInHand() && !bowSystemCtrl.GetHideBow()) && !hide;
-        }
-
-        private void SceneInstanceCtrl()
+        override public void SceneInstanceCtrl()
         {
             BowInfo _bowInfo = bowSystemCtrl.sceneBow.GetComponent<BowInfo>();
             Transform _anchor = GetAnchor();
@@ -98,41 +78,7 @@ namespace BowSystemLib
             }
         }
 
-        private Transform GetAnchor()
-        {
-            BowInfo _bowInfo = bowSystemCtrl.sceneBow.GetComponent<BowInfo>();
-            return inHand ? handArrowAnchor : _bowInfo.arrowAnchor;
-        }
-
-        public bool InHand {
-            get { return inHand; }
-            set { inHand = value; }
-        }
-
-        public void ArrowInHandTrue() {
-            InHand = true;
-        }
-        public void ArrowInHandFalse()
-        {
-            InHand = false;
-        }
-
-        public bool Hide
-        {
-            get { return hide; }
-            set { hide = value; }
-        }
-
-        public void ArrowHideTrue()
-        {
-            Hide = true;
-        }
-        public void ArrowHideFalse()
-        {
-            Hide = false;
-        }
-
-        public void ShootArrow() {
+        override public void ShootArrow() {
             BowInfo _bowInfo = bowSystemCtrl.sceneBow.GetComponent<BowInfo>();
             GameObject _arrow = Instantiate(currentArrow, _bowInfo.arrowAnchor.position, _bowInfo.arrowAnchor.rotation);
             ArrowInfo _arrowInfo = _arrow.GetComponent<ArrowInfo>();

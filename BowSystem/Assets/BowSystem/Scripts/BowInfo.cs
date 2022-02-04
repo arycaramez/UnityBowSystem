@@ -10,9 +10,9 @@ namespace BowSystemLib.Bow
         [HideInInspector] public string originalPrefabName;
         public Transform arrowAnchor;
 
-        [SerializeField] List<Renderer> renderers = new List<Renderer>();
+        public List<Renderer> renderers = new List<Renderer>();
 
-        public void ShowBow(bool value) {
+        virtual public void ShowBow(bool value) {
             foreach (Renderer e in renderers) {
                 if(e.enabled != value) e.enabled = value;
             }

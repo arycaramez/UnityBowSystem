@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d28799677d6e3409301d6d37215369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bowSystemCtrl: {fileID: 5960828010693077221}
   handArrowAnchor: {fileID: 3021895837903641460}
   currentArrow: {fileID: 5169705735684988448, guid: 534151af2ff1eee4ea5d599aed2d1f46,
     type: 3}
@@ -177,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c90aa72ab36f2340b4db8d2e638d73d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 5
 --- !u!114 &-5622059254109691734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e5874d1e5308147ad301fd16b348df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animShoot: {fileID: 7400000, guid: 605cf427d6ccf604e89e72abc1aba63a, type: 2}
+  animReload: {fileID: 7400000, guid: a7fbf0e7340cb104ea74f4a6fec342e0, type: 2}
 --- !u!95 &5460288494970895144
 Animator:
   serializedVersion: 3
