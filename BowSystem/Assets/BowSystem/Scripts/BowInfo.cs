@@ -8,8 +8,9 @@ namespace BowSystemLib.Bow
     public class BowInfo : MonoBehaviour
     {
         [HideInInspector] public string originalPrefabName;
-        public Transform arrowAnchor;
 
+        public float shootForce = 500;
+        public Transform arrowAnchor;
         public List<Renderer> renderers = new List<Renderer>();
 
         virtual public void ShowBow(bool value) {

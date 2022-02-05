@@ -1,19 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BowSystemLib.Arrow
 {
+    [RequireComponent(typeof(ArrowCollision))]
     public class ArrowInfo : MonoBehaviour
     {
+        private ArrowCollision arrowCollision;
+        
         [HideInInspector] public string originalPrefabName;
 
-        public float force = 10;
-        public int secondsToDestroy = 10;
-        public GameObject ignoreObj;
-        public Rigidbody rBody;
-
         public List<Renderer> renderers = new List<Renderer>();
+
+        private void Awake()
+        {
+            arrowCollision = GetComponent<ArrowCollision>();
+        }
 
         virtual public void Show(bool value)
         {
@@ -23,11 +27,8 @@ namespace BowSystemLib.Arrow
             }
         }
 
-        virtual public void ActiveShoot(Vector3 direction) {
-            rBody.isKinematic = false;
-            if(secondsToDestroy > 0) Destroy(gameObject, secondsToDestroy);
-            transform.rotation = Quaternion.LookRotation(direction);
-            rBody.AddForce(direction * force);
+        virtual public void ActiveShoot(Vector3 direction,float force) {
+            arrowCollision.Shoot(direction, force);
         }
     }
 }

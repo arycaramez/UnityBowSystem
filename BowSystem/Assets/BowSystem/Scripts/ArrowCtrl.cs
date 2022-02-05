@@ -78,11 +78,11 @@ namespace BowSystemLib
             }
         }
 
-        override public void ShootArrow() {
+        override public void ShootArrow(Vector3 targetPos) {
             BowInfo _bowInfo = bowSystemCtrl.sceneBow.GetComponent<BowInfo>();
             GameObject _arrow = Instantiate(currentArrow, _bowInfo.arrowAnchor.position, _bowInfo.arrowAnchor.rotation);
             ArrowInfo _arrowInfo = _arrow.GetComponent<ArrowInfo>();
-            _arrowInfo.ActiveShoot(transform.forward);
+            _arrowInfo.ActiveShoot(targetPos - _bowInfo.arrowAnchor.position,_bowInfo.shootForce);
         }
     }
 }

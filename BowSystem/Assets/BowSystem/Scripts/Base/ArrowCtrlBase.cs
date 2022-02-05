@@ -37,7 +37,7 @@ namespace BowSystemLib
         /// <summary> Run the main code of arrow controllers. </summary>
         virtual public void SceneArrowManager() { }
         /// <summary> Function responsible for shoot arrow. </summary>
-        virtual public void ShootArrow() { }
+        virtual public void ShootArrow(Vector3 targetPos) { }
         /// <summary>Return when arrow cam be hide.</summary>
         /// <returns></returns>
         virtual public bool ArrowIsHide()
