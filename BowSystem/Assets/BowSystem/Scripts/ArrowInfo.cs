@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using BowSystemLib.Bow;
 
 namespace BowSystemLib.Arrow
 {
@@ -9,26 +9,30 @@ namespace BowSystemLib.Arrow
     public class ArrowInfo : MonoBehaviour
     {
         private ArrowCollision arrowCollision;
-        
-        [HideInInspector] public string originalPrefabName;
-
-        public List<Renderer> renderers = new List<Renderer>();
+        public string originalPrefabName { get; set; }
+        /// <summary>Used to control renderer components.</summary>
+        [SerializeField] private List<Renderer> renderers = new List<Renderer>();
 
         private void Awake()
         {
             arrowCollision = GetComponent<ArrowCollision>();
         }
-
-        virtual public void Show(bool value)
-        {
+        /// <summary>Show and Hide the renderer components of Arrow.</summary>
+        /// <param name="value"></param>
+        virtual public void SetRenderers(bool value) {
             foreach (Renderer e in renderers)
             {
                 if (e.enabled != value) e.enabled = value;
             }
         }
-
-        virtual public void ActiveShoot(Vector3 direction,float force) {
-            arrowCollision.Shoot(direction, force);
+        /// <summary>
+        /// Instantiates a new arrow by enabling its physics including collision detection, then 
+        /// applies a firing force towards the target, using the parameters given to this function.
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="bowInfo"></param>
+        virtual public void ActiveShoot(Vector3 direction,BowInfo bowInfo) {
+            arrowCollision.Shoot(direction, bowInfo);
         }
     }
 }

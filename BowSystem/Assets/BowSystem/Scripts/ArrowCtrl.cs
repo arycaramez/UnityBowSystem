@@ -6,12 +6,41 @@ using BowSystemLib.Bow;
 
 namespace BowSystemLib
 {
-    public class ArrowCtrl : ArrowCtrlBase
+    public class ArrowCtrl : MonoBehaviour
     {
-        private bool lastInHand;
+        public BowCtrl bowCtrl;
 
-        override public void SceneArrowManager() {
-            if (bowSystemCtrl.sceneBow)
+        [Header("References:")]
+        public Transform handArrowAnchor;
+        [Space(5)]
+        public GameObject currentArrow;
+        [HideInInspector] public GameObject sceneArrow;
+
+        [Header("Settings:")]
+        public bool inHand;
+        public bool hide;
+
+        public bool lastInHand { get; set; }
+
+        private void Start()
+        {
+            bowCtrl = GetComponent<BowCtrl>();
+        }
+
+        private void OnDisable()
+        {
+            DestroyImmediate(sceneArrow);
+        }
+
+        private void FixedUpdate()
+        {
+            SceneArrowManager();
+        }
+
+        /// <summary> Run the main code of arrow controllers. </summary>
+        virtual public void SceneArrowManager()
+        {
+            if (bowCtrl.sceneBow)
             {
                 SceneInstanceCtrl();
             }
@@ -35,18 +64,24 @@ namespace BowSystemLib
 
                 if (inHand)
                 {
-                    sceneArrow.transform.SetParent(bowSystemCtrl.rootPlayerObj);
+                    sceneArrow.transform.SetParent(bowCtrl.rootPlayerObj);
                     sceneArrow.transform.position = _anchor.position;
                     sceneArrow.transform.rotation = _anchor.rotation;
                 }
 
-                _sceneArrowInfo.Show(ArrowIsHide());
+                _sceneArrowInfo.SetRenderers(ArrowIsHide());
             }
         }
-
-        override public void SceneInstanceCtrl()
+        /// <summary>Return when arrow cam be hide.</summary>
+        /// <returns></returns>
+        virtual public bool ArrowIsHide()
         {
-            BowInfo _bowInfo = bowSystemCtrl.sceneBow.GetComponent<BowInfo>();
+            return (bowCtrl.inHand && !bowCtrl.hide) && !hide;
+        }
+        /// <summary>  </summary>
+        virtual public void SceneInstanceCtrl()
+        {
+            BowInfo _bowInfo = bowCtrl.sceneBow.GetComponent<BowInfo>();
             Transform _anchor = GetAnchor();
             if (sceneArrow == null && currentArrow)
             {
@@ -77,12 +112,32 @@ namespace BowSystemLib
                 DestroyImmediate(sceneArrow);
             }
         }
-
-        override public void ShootArrow(Vector3 targetPos) {
-            BowInfo _bowInfo = bowSystemCtrl.sceneBow.GetComponent<BowInfo>();
-            GameObject _arrow = Instantiate(currentArrow, _bowInfo.arrowAnchor.position, _bowInfo.arrowAnchor.rotation);
-            ArrowInfo _arrowInfo = _arrow.GetComponent<ArrowInfo>();
-            _arrowInfo.ActiveShoot(targetPos - _bowInfo.arrowAnchor.position,_bowInfo.shootForce);
+        /// <summary> Return the current anchor reference of bow/crossbow. </summary>
+        /// <returns></returns>
+        virtual public Transform GetAnchor()
+        {
+            BowInfo _bowInfo = bowCtrl.sceneBow.GetComponent<BowInfo>();
+            return inHand ? handArrowAnchor : _bowInfo.arrowAnchor;
+        }
+        /// <summary> Trigger for animation: Enable hand anchor reference like current.</summary>
+        virtual public void ArrowInHandTrue()
+        {
+            inHand = true;
+        }
+        /// <summary> Trigger for animation: Disable hand anchor reference like current.</summary>
+        virtual public void ArrowInHandFalse()
+        {
+            inHand = false;
+        }
+        /// <summary> Trigger for animation: Enable renderer arrow components.</summary>
+        virtual public void ArrowHideTrue()
+        {
+            hide = true;
+        }
+        /// <summary> Trigger for animation: Disable renderer arrow components.</summary>
+        virtual public void ArrowHideFalse()
+        {
+            hide = false;
         }
     }
 }

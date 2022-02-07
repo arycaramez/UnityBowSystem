@@ -47,11 +47,13 @@ public class PlayerAnim : MonoBehaviour
 
     public void CtrlTargetArmR(Vector3 targetPos) {
         //armR.forward, targetPos - armR.position
-        float _angle = Vector3.Angle(transform.forward, targetPos - armR.position);
-        Vector3 _cross = Vector3.Cross(transform.forward, targetPos - armR.position);
-        if (_cross.y < 0) {
+        float _angle = Vector3.Angle(targetPos - armR.position, transform.forward);
+        Quaternion _rot = Quaternion.LookRotation(targetPos - armR.position);
+
+        if (_rot.eulerAngles.x < 180) {
             _angle = -_angle;
         }
+
         BowTargetAngle = _angle;
     }
 }

@@ -13,16 +13,17 @@ using BowSystemLib;
 public class PlayerCtrl : MonoBehaviour
 {
     private PlayerAnim playerAnim;
-    private ArrowCtrlBase arrowCtrl;
+    private BowCtrl bowCtrl;
+    private ArrowCtrl arrowCtrl;
 
-    [SerializeField] private float cooldown;
-    private float countCooldown;
+    private RaycastHit _hit = new RaycastHit();
 
     // Start is called before the first frame update
     void Start()
     {
         playerAnim = GetComponent<PlayerAnim>();
-        arrowCtrl = GetComponent<ArrowCtrlBase>();
+        bowCtrl = GetComponent<BowCtrl>();
+        arrowCtrl = GetComponent<ArrowCtrl>();
     }
 
     // Update is called once per frame
@@ -30,32 +31,32 @@ public class PlayerCtrl : MonoBehaviour
     {
         //Player Rotation
         Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit _hit = new RaycastHit();
-
-        if (Physics.Raycast(_ray, out _hit)) {
-            Vector3 _euler = Quaternion.LookRotation(_hit.point - transform.position).eulerAngles;
-            _euler.x = 0;
-            _euler.z = 0;
-            transform.eulerAngles = _euler;
-            // 
-            playerAnim.CtrlTargetArmR(_hit.point);
-
-            // Shoot Arrow and Reload.
-            if (Input.GetKey(KeyCode.Mouse0) && playerAnim.BowEquiped && !playerAnim.IsPlayReload() && !playerAnim.IsPlayShoot())
-            {
-                if (!arrowCtrl.hide)
-                {
-                    arrowCtrl.ShootArrow(_hit.point);
-                    playerAnim.PlayShoot();
-                    countCooldown = Time.time;
-                }
-                ArrowReload();
-            }
-            else
-            {
-                ArrowReload();
-            }
+        
+        if (!Physics.Raycast(_ray, out _hit))
+        {
+            _hit.point = _ray.GetPoint(100);
         }
+        //
+        Vector3 _euler = Quaternion.LookRotation(_hit.point - transform.position).eulerAngles;
+        _euler.x = 0;
+        _euler.z = 0;
+        transform.eulerAngles = _euler;
+        // 
+        playerAnim.CtrlTargetArmR(_hit.point);
+
+        // Shoot Arrow and Reload.
+        if (Input.GetKey(KeyCode.Mouse0) && playerAnim.BowEquiped && !playerAnim.IsPlayReload() && !playerAnim.IsPlayShoot())
+        {
+            if (!arrowCtrl.hide)
+            {
+                bowCtrl.ShootArrow(_hit.point);
+                playerAnim.PlayShoot();
+            }
+            ArrowReload();
+        }else {
+            ArrowReload();
+        }
+
         // Use or Keep the bow/crossbow
         if (Input.GetKeyDown(KeyCode.Tab)) {
             playerAnim.BowEquiped = !playerAnim.BowEquiped;
