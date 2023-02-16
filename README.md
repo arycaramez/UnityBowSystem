@@ -48,5 +48,6 @@ Obs: A flecha possui também um "Rigidbody", sem "gravidade", marcado com "isKin
 3º - O bow/crossbow possui um único script:
 - Script "BowInfo" -> contém a força do disparo, a ancora onde a flecha fica quando a arma é recarregada e uma lista de componentes "Renderer" que serão desativados e ativados, quando for requisitado.
 
+### Obs: Em caso de dúvida consulte a demo, ela possui uma cena com todos os recursos em uso, use as descrições dos scripts neste documento como um mapa.
 
 ###### O projeto é livre para download e uso, espero que goste e aprecie minha evolução.
