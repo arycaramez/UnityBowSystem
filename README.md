@@ -11,25 +11,9 @@
 - Possui uma flecha que ao atingir o alvo consegue se fixar a ele, mesmo que ele se mova ela permanecerá no local.
 
 ## Organização dos arquivos:
-+-BowSystem
-|
-| +--Demo (arquivos de demonstração)
-| | +--Objects
-| | | +--Arrow
-| | | | +--materials
-| | | +--character_rogue
-| | | | +--materials
-| | | +--crossbow
-| | | | +--materials
-| | | +--target
-| | | | +--materials
-| | | +--targetStand
-| |
-| | +--Prefabs
-| | +--Scripts
-| | +-- SFX
-| |
-| +--Scripts (Pasta contendo os scripts do asset)
+
+![Screenshot_4](https://user-images.githubusercontent.com/37397920/219293625-87a4e776-1cc7-4b15-aeea-6db7b59314ae.png)
+
 
 ## Modo de uso:
 Obs: um conceito importante, existe um elemento usado no código chamado de ancora (anchor) esses objetos são "Transform" e servem de referencia para as instancias do arco e flecha, ou seja eles serão instanciados dentro destes objetos. As ancoras estão localizadas no objeto do personagem, se o personagem possuir rig recomendo colocar a ancora dentro do osso desejado. 
