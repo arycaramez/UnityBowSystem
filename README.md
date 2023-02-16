@@ -54,12 +54,15 @@ Possui funções executadas em "Animation Events":
 2º - A flecha possi alguns componentes:
 - Script "Arrow Info": Serve para desaticar/ativar a renderização da flecha. Possui uma lista que você pode colocar todos os objetos de renderização, "Mesh Renderer" etc, ligados a flecha.
 - Script "ArrowCollision": Trata da colisão da flecha, segue a imagem:
--
+
 ![Screenshot_3](https://user-images.githubusercontent.com/37397920/219290596-5229386b-dbf8-4636-b0a3-28febb65b6f5.png)
 
 - Script "ArrowGrip": Script responsável por fazer a flecha se fixar no alvo após a colisão.
 
-3º - ?
+Obs: A flecha possui também um "Rigidbody", sem "gravidade", marcado com "isKinematic" igual a verdadeiro.
+
+3º - O bow/crossbow possui um único script:
+- Script "BowInfo" -> contém a força do disparo, a ancora onde a flecha fica quando a arma é recarregada e uma lista de componentes "Renderer" que serão desativados e ativados, quando for requisitado.
 
 
 ###### O projeto é livre para download e uso, espero que goste e aprecie minha evolução.
