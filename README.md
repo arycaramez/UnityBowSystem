@@ -3,7 +3,7 @@
 ## Conceito inicial:
 - É um projeto antigo onde eu estava testando uma ideia, se eu poderia gerenciar dinamicamente a instancia de itens no personagem.
 
-> Propósito:
+## Propósito:
 - Criar uma mecânica simples de instanciamento de um arco a um personagem.
 
 ## Recursos:
