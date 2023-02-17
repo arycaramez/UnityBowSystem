@@ -1,7 +1,7 @@
 # UnityBowSystem
 
 ## Conceito inicial:
-- Foi um projeto antigo onde eu estava testando uma ideia, se eu poderia gerenciar dinamicamente a instancia de itens no cenário.
+- É um projeto antigo onde eu estava testando uma ideia, se eu poderia gerenciar dinamicamente a instancia de itens no personagem.
 
 > Propósito:
 - Criar uma mecânica simples de instanciamento de um arco a um personagem.
